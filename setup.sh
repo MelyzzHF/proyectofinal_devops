@@ -33,4 +33,10 @@ sudo ./aws/install --update
 echo " Instalando Git (Control de Versiones)..."
 sudo apt install -y git
 
+echo " Instalando Docker y Docker Compos"
+sudo apt install -y docker.io docker-compose
+# Iniciamos el servicio de Docker
+sudo systemctl start docker
+sudo systemctl enable docker
+
 echo "Instalación de dependencias completada"

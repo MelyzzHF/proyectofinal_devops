@@ -2,6 +2,7 @@
 venv/
 env/
 .env
+awscliv2.zip
 
 # 2. Archivos compilados y cachés de Python
 __pycache__/

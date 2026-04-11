@@ -1,0 +1,41 @@
+name: CI/CD Pipeline DevOps
+
+on:
+  push:
+    branches: [ "develop", "main" ]
+
+jobs:
+  # 1. ETAPA DE PRUEBAS
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Configurar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Instalar dependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Ejecutar Pruebas Automatizadas
+      run: pytest test_app.py
+
+  # 2. ETAPA DE DESPLIEGUE Y ROLLBACK
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Desplegar en AWS EC2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_KEY }}
+        # Comandos que GitHub ejecutará DENTRO de tu EC2
+        script: |
+          cd /home/ubuntu/proyectofinal_devops
+          git pull origin develop
+
+          # Intentar levantar los contenedores. Si falla (||), ejecuta el rollback.
+          sudo docker compose up -d --build || ./rollback.sh

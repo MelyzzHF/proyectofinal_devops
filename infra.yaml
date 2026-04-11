@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Plantilla de CloudFormation para Proyecto Final DevOps
+
+Resources:
+  #Creación de la Instancia EC2
+  MiServidorCloudFormation:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0c7217cdde317cfec
+      IamInstanceProfile: LabInstanceProfile
+      Tags:
+        - Key: Name
+          Value: Servidor-Creado-Por-CloudFormation
+  #Creación del Bucket S3
+  MiBucketDeDatos:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: bucket-proyecto-final-melyzzhf
+
+Outputs:
+  IDDelServidorEC2:
+    Description: Este es el ID de la maquina virtual que acabamos de crear
+    Value: !Ref MiServidorCloudFormation
+
+  NombreDelBucketS3:
+    Description: Este es el nombre unico de tu nuevo bucket de almacenamiento
+    Value: !Ref MiBucketDeDatos

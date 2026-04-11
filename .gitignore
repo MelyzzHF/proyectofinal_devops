@@ -1,2 +1,21 @@
-"__pycache__/" 
-".env" 
+# 1. Entornos virtuales y secreto
+venv/
+env/
+.env
+
+# 2. Archivos compilados y cachés de Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# 3. Archivos temporales del sistema operativo
+.DS_Store
+Thumbs.db
+
+# 4. Datos de la base de datos local (si llegaras a usar SQLite)
+*.sqlite3
+
+# 5. Carpetas de logs generadas automáticamente
+logs/
+*.log 
